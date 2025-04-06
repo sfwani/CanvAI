@@ -4,7 +4,7 @@ import path from 'path';
 import pdfParse from 'pdf-parse';
 
 // This is a test endpoint to validate PDF processing works
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Log to help with debugging
     console.log('Test endpoint started');

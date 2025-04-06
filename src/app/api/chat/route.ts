@@ -110,10 +110,10 @@ export async function POST(req: Request) {
     return NextResponse.json({
       message: text
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error in chat API:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to process chat request' },
+      { error: error instanceof Error ? error.message : 'Failed to process chat request' },
       { status: 500 }
     );
   }

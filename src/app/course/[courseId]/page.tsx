@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { ArrowLeft, Info, Loader2 } from 'lucide-react';
 import { use } from 'react';
 import { CanvasAPI } from '@/lib/canvas';
-import Head from 'next/head';
 
 interface PageProps {
   params: Promise<{
@@ -106,7 +105,7 @@ const CoursePage: FC<PageProps> = ({ params }) => {
   }, [courseName, loading]);
 
   // Handle navigation back to dashboard with state preservation
-  const handleBackToDashboard = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleBackToDashboard = () => {
     // No action needed, the dashboard will now use cached data
     // when navigating back from this page
   };

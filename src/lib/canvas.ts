@@ -98,7 +98,7 @@ export class CanvasAPI {
     }
   }
 
-  private async fetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  private async fetch<T>(endpoint: string): Promise<T> {
     try {
       console.log(`Fetching Canvas API endpoint: ${endpoint}`);
       const response = await fetch('/api/canvas/data', {
@@ -132,7 +132,7 @@ export class CanvasAPI {
 
       const { data } = await response.json();
       return data;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching from Canvas:', error);
       
       // If it's already a CanvasApiError, just re-throw it
@@ -142,13 +142,13 @@ export class CanvasAPI {
       
       // Otherwise, create a new CanvasApiError
       throw new CanvasApiError(
-        error.message || 'Unable to connect to Canvas. Please check your network connection and Canvas URL.'
+        error instanceof Error ? error.message : 'Unable to connect to Canvas. Please check your network connection and Canvas URL.'
       );
     }
   }
 
   async getCurrentUser() {
-    return this.fetch<any>('users/self/profile');
+    return this.fetch<Record<string, unknown>>('users/self/profile');
   }
 
   async getCourses() {
@@ -204,7 +204,7 @@ export class CanvasAPI {
         .filter(assignment => {
           try {
             return assignment.due_at && new Date(assignment.due_at) > new Date();
-          } catch (error: any) {
+          } catch (error) {
             console.log(`Skipping assignment with invalid due date:`, assignment);
             return false;
           }
@@ -247,7 +247,7 @@ export class CanvasAPI {
         .sort((a, b) => {
           try {
             return new Date(b.posted_at).getTime() - new Date(a.posted_at).getTime();
-          } catch (error: any) {
+          } catch (error) {
             console.log(`Error sorting announcements:`, { a, b, error });
             return 0;
           }

@@ -1,9 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+
+interface PDFData {
+  success: boolean;
+  text: string;
+  metadata: {
+    info: Record<string, unknown>;
+    numberOfPages: number;
+    version: string;
+  };
+}
 
 export default function PDFTestPage() {
-  const [pdfData, setPdfData] = useState<any>(null);
+  const [pdfData, setPdfData] = useState<PDFData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

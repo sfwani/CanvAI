@@ -161,7 +161,7 @@ const CourseChat: FC<CourseChatProps> = ({ courseId, courseName = '' }) => {
         .filter(file => selectedFiles.has(file.id) && file.content);
       
       // Create the API messages array
-      let apiMessages = [...chatHistory, userMessage];
+      const apiMessages = [...chatHistory, userMessage];
       
       if (selectedFilesWithContent.length > 0) {
         // Format the file context with special handling for PDFs
@@ -492,10 +492,10 @@ const CourseChat: FC<CourseChatProps> = ({ courseId, courseName = '' }) => {
                 <div className="text-sm">
                   <p>Examples:</p>
                   <ul className="mt-2 space-y-2">
-                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">"Can you explain the concept of pipelining from Lecture 2.1?"</li>
-                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">"What are the key points about RISC-V registers?"</li>
-                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">"Summarize Chapter 5 about memory systems."</li>
-                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">"Help me understand the formulas in the Formula List PDF."</li>
+                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">&quot;Can you explain the concept of pipelining from Lecture 2.1?&quot;</li>
+                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">&quot;What are the key points about RISC-V registers?&quot;</li>
+                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">&quot;Summarize Chapter 5 about memory systems.&quot;</li>
+                    <li className="p-2 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors cursor-pointer">&quot;Help me understand the formulas in the Formula List PDF.&quot;</li>
                   </ul>
                 </div>
               </div>

@@ -4,7 +4,6 @@ import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { auth } from '@/lib/auth';
 
 // Mark this as a server-side only file
 export const runtime = 'nodejs'; // or 'edge'

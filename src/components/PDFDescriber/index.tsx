@@ -9,7 +9,7 @@ interface PDFDescriberProps {
 }
 
 // This component provides information about PDFs in the context panel
-const PDFDescriber: FC<PDFDescriberProps> = ({ file }) => {
+const PDFDescriber: FC<PDFDescriberProps> = () => {
   return (
     <div className="w-full">
       <div className="text-xs text-gray-500 p-2 bg-blue-50 rounded border border-blue-100 flex items-start">

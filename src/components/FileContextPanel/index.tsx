@@ -5,7 +5,6 @@ import { Switch } from '@/components/ui/switch';
 import { CourseFile } from '@/lib/courseFiles';
 import { Loader2, CheckCircle, FileText, FileX } from 'lucide-react';
 import FileSummarizer from '@/components/FileSummarizer';
-import PDFDescriber from '@/components/PDFDescriber';
 
 interface FileContextPanelProps {
   files: CourseFile[];
@@ -22,50 +21,6 @@ const FileContextPanel: FC<FileContextPanelProps> = ({
 }) => {
   const selectedFilesList = files.filter(file => selectedFiles.has(file.id));
   const unselectedFilesList = files.filter(file => !selectedFiles.has(file.id));
-
-  const FileItem = ({ file, showSummarizer = false }: { file: CourseFile; showSummarizer?: boolean }) => {
-    const isProcessing = processingFiles.has(file.id);
-    const isPDF = file.name.toLowerCase().endsWith('.pdf');
-    
-    return (
-      <div
-        key={file.id}
-        className="flex flex-col p-2 bg-white rounded-lg shadow-sm"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex-1 min-w-0 mr-4">
-            <p className="text-sm font-medium text-gray-900 truncate">
-              {file.name}
-              {isProcessing && (
-                <span className="ml-2 text-amber-600 text-xs">
-                  (processing...)
-                </span>
-              )}
-            </p>
-            <p className="text-xs text-gray-500">
-              {getSimpleFileType(file.type)}
-            </p>
-          </div>
-          {isProcessing ? (
-            <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
-          ) : (
-            <Switch
-              checked={selectedFiles.has(file.id)}
-              onCheckedChange={() => onToggleFile(file.id)}
-              className="data-[state=checked]:bg-blue-500"
-            />
-          )}
-        </div>
-        
-        {/* Show the appropriate tool for selected files with content */}
-        {showSummarizer && file.content && !isPDF && (
-          <div className="mt-2">
-            <FileSummarizer file={file} />
-          </div>
-        )}
-      </div>
-    );
-  };
 
   // Get a simpler file type description
   const getSimpleFileType = (mimeType: string): string => {

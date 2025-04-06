@@ -65,22 +65,22 @@ export async function POST(request: Request) {
       const userData = await response.json();
       console.log('Canvas API Success:', userData);
       return NextResponse.json({ success: true, user: userData });
-    } catch (fetchError: any) {
+    } catch (fetchError: unknown) {
       console.error('Fetch Error:', fetchError);
       return NextResponse.json(
         { 
           error: 'Failed to connect to Canvas API',
-          details: fetchError.message
+          details: fetchError instanceof Error ? fetchError.message : 'Unknown error'
         },
         { status: 500 }
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Validation Error:', error);
     return NextResponse.json(
       { 
         error: 'Unable to validate Canvas credentials',
-        details: error.message || 'Unknown error occurred'
+        details: error instanceof Error ? error.message : 'Unknown error occurred'
       },
       { status: 500 }
     );

@@ -194,10 +194,10 @@ ${description}
       summary: summary || `Unable to generate summary for ${fileName}`,
       fileName: fileName
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error in summarize API:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to summarize document' },
+      { error: error instanceof Error ? error.message : 'Failed to summarize document' },
       { status: 500 }
     );
   }

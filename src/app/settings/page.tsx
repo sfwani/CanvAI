@@ -35,9 +35,9 @@ export default function Settings() {
           setCanvasToken(data.canvas_token || '');
           setCanvasDomain(data.canvas_domain || '');
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error('Error fetching settings:', error);
-        setError(error.message || 'Failed to load settings');
+        setError(error instanceof Error ? error.message : 'Failed to load settings');
       } finally {
         setLoading(false);
       }
@@ -86,7 +86,7 @@ export default function Settings() {
 
       // Check if user record exists
       console.log('Checking if user record exists...');
-      const { data: existingUser, error: existingUserError } = await supabase
+      const { error: existingUserError } = await supabase
         .from('users')
         .select('id')
         .eq('id', user.id)
@@ -148,12 +148,12 @@ export default function Settings() {
         router.push('/dashboard');
       }, 1500);
 
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error saving settings:', {
-        message: error.message,
+        message: error instanceof Error ? error.message : 'Unknown error',
         error: error
       });
-      setError(error.message || 'An unexpected error occurred');
+      setError(error instanceof Error ? error.message : 'An unexpected error occurred');
     } finally {
       setSaving(false);
     }

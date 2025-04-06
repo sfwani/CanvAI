@@ -52,9 +52,9 @@ export async function POST(req: Request) {
       try {
         const errorData = await response.json();
         if (errorData && errorData.errors) {
-          errorMessage = errorData.errors.map((err: any) => err.message).join(', ');
+          errorMessage = errorData.errors.map((err: { message: string }) => err.message).join(', ');
         }
-      } catch (e) {
+      } catch {
         // If we can't parse the error response, just use the status text
       }
       

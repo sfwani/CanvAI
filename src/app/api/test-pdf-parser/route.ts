@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import pdfParse from 'pdf-parse';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Path to our test PDF file
     const pdfPath = path.join(process.cwd(), 'public', 'samples', 'test.pdf');

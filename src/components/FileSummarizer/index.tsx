@@ -9,14 +9,19 @@ interface FileSummarizerProps {
   file: CourseFile;
 }
 
+interface DebugInfo {
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+}
+
 // Alternative summarization approach that works directly with text
 const FileSummarizer: FC<FileSummarizerProps> = ({ file }) => {
   const [summary, setSummary] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [debugInfo, setDebugInfo] = useState<any>(null);
-  const [isPdfFallback, setIsPdfFallback] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
 
   // Use AI directly if we already have the file content
   const summarizeWithAI = async (content: string) => {
@@ -52,7 +57,6 @@ const FileSummarizer: FC<FileSummarizerProps> = ({ file }) => {
     setError(null);
     setSummary(null);
     setDebugInfo(null);
-    setIsPdfFallback(false);
 
     try {
       console.log('Starting file summarization for:', file.name);
@@ -124,10 +128,6 @@ const FileSummarizer: FC<FileSummarizerProps> = ({ file }) => {
       
       if (data.summary) {
         setSummary(data.summary);
-        // Check if this is a PDF fallback response
-        if (data.isPdfFallback) {
-          setIsPdfFallback(true);
-        }
       } else {
         throw new Error('No summary returned from API');
       }

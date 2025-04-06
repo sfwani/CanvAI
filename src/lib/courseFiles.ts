@@ -57,17 +57,22 @@ export async function getCourseFiles(courseId: string): Promise<CourseFile[]> {
         url: file.url,
         type: file.content_type || 'unknown'
       }));
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Handle Canvas API specific errors
       console.error('Canvas API error:', error);
-      if (error.message?.includes('Resource not found')) {
-        throw new CanvasError(`Course ${courseId} not found. Please check the course ID and your permissions.`);
-      } else if (error.message?.includes('Invalid Canvas API token')) {
-        throw new CanvasError('Invalid Canvas API token. Please update your Canvas token in account settings.');
+      if (error instanceof Error) {
+        if (error.message?.includes('Resource not found')) {
+          throw new CanvasError(`Course ${courseId} not found. Please check the course ID and your permissions.`);
+        } else if (error.message?.includes('Invalid Canvas API token')) {
+          throw new CanvasError('Invalid Canvas API token. Please update your Canvas token in account settings.');
+        }
+        
+        // Re-throw other errors
+        throw new CanvasError(`Canvas API error: ${error.message}`);
       }
       
-      // Re-throw other errors
-      throw new CanvasError(`Canvas API error: ${error.message || 'Unknown error'}`);
+      // If it's not an Error object
+      throw new CanvasError(`Canvas API error: Unknown error`);
     }
   } catch (error) {
     console.error('Error fetching course files:', error);
@@ -173,4 +178,4 @@ export async function getFileContent(fileUrl: string, fileName?: string): Promis
     console.error('Error fetching file content:', error);
     return `Error loading file content: ${error instanceof Error ? error.message : 'Unknown error'}`;
   }
-} 
+}

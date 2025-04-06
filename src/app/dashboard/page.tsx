@@ -18,6 +18,15 @@ interface Announcement {
   posted_at: string;
 }
 
+interface Assignment {
+  id: number;
+  name: string;
+  due_at: string | null;
+  course_id: number;
+  html_url: string;
+  courseName?: string;
+}
+
 interface Term {
   id: number;
   name: string;
@@ -26,7 +35,7 @@ interface Term {
 interface DashboardData {
   courses: Course[];
   currentTerm: Term | null;
-  assignments: any[];
+  assignments: Assignment[];
   announcements: Announcement[];
   lastFetched: number | null;
 }

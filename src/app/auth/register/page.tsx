@@ -32,8 +32,8 @@ export default function Register() {
       // Show success message and redirect to login
       alert('Please check your email for verification link');
       router.push('/auth/login');
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'An error occurred during registration');
     } finally {
       setLoading(false);
     }
