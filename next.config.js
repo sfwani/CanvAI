@@ -2,16 +2,25 @@
 const nextConfig = {
   // Configure server-only runtime for specific API routes
   experimental: {
-    serverComponentsExternalPackages: ['pdf-parse', 'mammoth'],
-    skipNodeVersionCheck: true,
     missingSuspenseWithCSRBailout: false,
   },
+  // Add server external packages
+  serverExternalPackages: ['pdf-parse', 'mammoth'],
+  skipNodeVersionCheck: true,
   // Increase API body size limit for file uploads (default is 4mb)
-  api: {
-    responseLimit: '16mb',
-    bodyParser: {
-      sizeLimit: '16mb',
-    },
+  apiBodySizeLimit: '16mb',
+  headers: async () => {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0',
+          },
+        ],
+      },
+    ];
   },
 };
 
