@@ -1,9 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getCanvasToken } from '@/lib/auth';
 
+type RouteParams = {
+  params: {
+    courseId: string;
+  };
+};
+
 export async function GET(
-  request: Request,
-  context: { params: { courseId: string } }
+  request: NextRequest,
+  { params }: RouteParams
 ) {
   try {
     const token = await getCanvasToken();
@@ -14,7 +20,7 @@ export async function GET(
       );
     }
 
-    const courseId = context.params.courseId;
+    const courseId = params.courseId;
     const canvasBaseUrl = process.env.CANVAS_API_URL;
     
     const response = await fetch(
