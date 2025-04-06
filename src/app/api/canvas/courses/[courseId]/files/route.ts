@@ -3,7 +3,7 @@ import { getCanvasToken } from '@/lib/auth';
 
 export async function GET(
   request: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: { courseId: string } }
 ) {
   try {
     const token = await getCanvasToken();
@@ -14,7 +14,7 @@ export async function GET(
       );
     }
 
-    const courseId = params.courseId;
+    const courseId = context.params.courseId;
     const canvasBaseUrl = process.env.CANVAS_API_URL;
     
     const response = await fetch(
