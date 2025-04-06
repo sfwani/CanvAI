@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Configure server-only runtime for specific API routes
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
+  experimental: {},
   // Add server external packages
   serverExternalPackages: ['pdf-parse', 'mammoth'],
-  skipNodeVersionCheck: true,
   // Increase API body size limit for file uploads (default is 4mb)
-  apiBodySizeLimit: '16mb',
+  distDir: '.next',
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
   headers: async () => {
     return [
       {
